@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body id="body">
+    <!-- CREAR EVENTOS PARA RECIBIR LOS VALORES -->
+    <samp>Ingrese tipo de grafo</samp>
+    <select name="typeGraf" id="typeGraf">
+        <option value="0">NO DIRIGIDO</option>
+        <option value="1">GRAFO DIRIGIDO</option>
+    </select>
+    <br>
+
+    <div id="content" >
+        <section>
+            <!-- V1 -->
+            <samp>V1</samp>
+            <select name="relationGraf1" id="relationGraf1">
+                <option value="0"></option>
+                <option value="1" id="ndV1">===</option>
+                <option value="2" id="dV1">==)</option>
+            </select>
+
+            <input type="checkbox" name="V1V2" id="V1V2">
+            <samp>V2</samp>
+
+            <input type="checkbox" name="V1V3" id="V1V3">
+            <samp>V3</samp>
+
+            <input type="checkbox" name="V1V4" id="V1V4">
+            <samp>V4</samp>
+
+            <input type="checkbox" name="V1V1" id="V1V1">
+            <samp>V1</samp>
+        </section>
+
+        <section>
+            <!-- V2 -->
+            <samp>V2</samp>
+            <select name="relationGraf2" id="relationGraf2">
+                <option value="0"></option>
+                <option value="1" id="ndV2">===</option>
+                <option value="2" id="dV2">==)</option>
+            </select>
+
+            <input type="checkbox" name="V2V1" id="V2V1">
+            <samp>V1</samp>
+
+            <input type="checkbox" name="V2V3" id="V2V3">
+            <samp>V3</samp>
+
+            <input type="checkbox" name="V2V4" id="V2V4">
+            <samp>V4</samp>
+
+            <input type="checkbox" name="V2V2" id="V2V2">
+            <samp>V2</samp>
+        </section>
+
+
+        <section>
+            <!-- V3 -->
+            <samp>V3</samp>
+            <select name="relationGraf3" id="relationGraf3">
+                <option value="0"></option>
+                <option value="1" id="ndV3">===</option>
+                <option value="2" id="dV3">==)</option>
+            </select>
+
+            <input type="checkbox" name="V3V1" id="V3V1">
+            <samp>V1</samp>
+
+            <input type="checkbox" name="V3V2" id="V3V2">
+            <samp>V2</samp>
+
+            <input type="checkbox" name="V3V4" id="V3V4">
+            <samp>V4</samp>
+
+            <input type="checkbox" name="V3V3" id="V3V3">
+            <samp>V3</samp>
+        </section>
+
+        
+        <section id="sectionV4">
+            <!-- V4 -->
+            <samp>V4</samp>
+            <select name="relationGraf4" id="relationGraf4">
+                <option value="0"></option>
+                <option value="1" id="ndV4">===</option>
+                <option value="2" id="dV4">==)</option>
+            </select>
+
+            <input type="checkbox" name="V4V1" id="V4V1">
+            <samp>V1</samp>
+
+            <input type="checkbox" name="V4V2" id="V4V2">
+            <samp>V2</samp>
+
+            <input type="checkbox" name="V4V3" id="V4V3">
+            <samp>V3</samp>
+
+            <input type="checkbox" name="V4V4" id="V4V4">
+            <samp>V4</samp>
+        </section>
+
+    </div>
+    <button type="button" id="Enviar">ENVIAR</button>
+
+    <div>
+        <h1>Matriz matrizAdyacencia</h1>
+        <table id="matrizAdyacencia">
+            <tr>
+                <th></th>
+                <th>V1</th>
+                <th>V2</th>
+                <th>V3</th>
+                <th>V4</th>
+            </tr>
+            <tr>
+                <th>V1</th>
+                <td id="MaV1V1">0</td>
+                <td id="MaV1V2">0</td>
+                <td id="MaV1V3">0</td>
+                <td id="MaV1V4">0</td>
+            </tr>
+            <tr>
+                <th>V2</th>
+                <td id="MaV2V1">0</td>
+                <td id="MaV2V2">0</td>
+                <td id="MaV2V3">0</td>
+                <td id="MaV2V4">0</td>
+            </tr>
+            <tr>
+                <th>V3</th>
+                <td id="MaV3V1">0</td>
+                <td id="MaV3V2">0</td>
+                <td id="MaV3V3">0</td>
+                <td id="MaV3V4">0</td>
+            </tr>
+            <tr>
+                <th>V4</th>
+                <td id="MaV4V1">0</td>
+                <td id="MaV4V2">0</td>
+                <td id="MaV4V3">0</td>
+                <td id="MaV4V4">0</td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <h1>Matriz de Incidencia</h1>
+        <table id="matrizIncidencia">
+            <tr>
+                <th></th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+                <th>G</th>
+                <th>H</th>
+                <th>I</th>
+                <th>J</th>
+            </tr>
+            <tr>
+                <th>V1</th>
+                <td id="MiV1A">0</td>
+                <td id="MiV1B">0</td>
+                <td id="MiV1C">0</td>
+                <td id="MiV1D">0</td>
+                <td id="MiV1E">0</td>
+                <td id="MiV1F">0</td>
+                <td id="MiV1G">0</td>
+                <td id="MiV1H">0</td>
+                <td id="MiV1I">0</td>
+                <td id="MiV1J">0</td>
+            </tr>
+            <tr>
+                <th>V2</th>
+                <td id="MiV2A">0</td>
+                <td id="MiV2B">0</td>
+                <td id="MiV2C">0</td>
+                <td id="MiV2D">0</td>
+                <td id="MiV2E">0</td>
+                <td id="MiV2F">0</td>
+                <td id="MiV2G">0</td>
+                <td id="MiV2H">0</td>
+                <td id="MiV2I">0</td>
+                <td id="MiV2J">0</td>
+            </tr>
+            <tr>
+                <th>V3</th>
+                <td id="MiV3A">0</td>
+                <td id="MiV3B">0</td>
+                <td id="MiV3C">0</td>
+                <td id="MiV3D">0</td>
+                <td id="MiV3E">0</td>
+                <td id="MiV3F">0</td>
+                <td id="MiV3G">0</td>
+                <td id="MiV3H">0</td>
+                <td id="MiV3I">0</td>
+                <td id="MiV3J">0</td>
+            </tr>
+            <tr>
+                <th>V4</th>
+                <td id="MiV4A">0</td>
+                <td id="MiV4B">0</td>
+                <td id="MiV4C">0</td>
+                <td id="MiV4D">0</td>
+                <td id="MiV4E">0</td>
+                <td id="MiV4F">0</td>
+                <td id="MiV4G">0</td>
+                <td id="MiV4H">0</td>
+                <td id="MiV4I">0</td>
+                <td id="MiV4J">0</td>
+            </tr>
+        </table>
+    </div>
+    <p>PARA LA MATRIZ DE INCIDENCIA, AL MODIFICAR LOS VALORES NO SE ACTUALIZAN, DEBE RECARGAR LA PAG.</p>
+</body>
+<script src="main.js"></script>
+
+</html>
