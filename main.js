@@ -1,8 +1,6 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable brace-style */
 // CONDICIONA LAS LISTAS VISUALES
-function mostrarDireccion(typeGraf) {
-  if (typeGraf.value === 1) {
+function mostrarDireccion() {
+  if (document.getElementById('typeGraf').value == 1) {
     document.getElementById('dV1').hidden = false;
     document.getElementById('dV2').hidden = false;
     document.getElementById('dV3').hidden = false;
@@ -13,7 +11,8 @@ function mostrarDireccion(typeGraf) {
     document.getElementById('ndV4').hidden = true;
   }
 
-  else { document.getElementById('ndV1').hidden = false;
+  else {
+    document.getElementById('ndV1').hidden = false;
     document.getElementById('ndV2').hidden = false;
     document.getElementById('ndV3').hidden = false;
     document.getElementById('ndV4').hidden = false;
@@ -80,7 +79,7 @@ function ejecutar() {
         lista3.shift();
     }
 
-    /*
+    
     for (i = 0; i < 4; i++) {
         for (k = 0; k < 4; k++) {
             let identificador = lista1[i] + lista2[k];
@@ -99,18 +98,18 @@ function ejecutar() {
                 matrizIDirigida(
                     document.getElementById(identificador), document.getElementById(identificador2)
                     );
-            }
-        }
+      }
     }
- */
+  }
 }
 
 function main() {
+  mostrarDireccion();
   const typeGraf = document.getElementById('typeGraf');
-  mostrarDireccion(typeGraf);
+
   typeGraf.addEventListener('click', mostrarDireccion);
 
-  const enviar = document.getElementById('Enviar').addEventListener('click', ejecutar);
+  document.getElementById('Enviar').addEventListener('click', ejecutar);
 }
 
 
@@ -201,18 +200,16 @@ function matrizINodirigida(checkbox, checkbox2, letra) {
     }
 }
 
-
 //MATRIZ DE INCIDENCIA DIRIGIDA
 function matrizIDirigida(checkbox, checkbox2) {
+  function modificar(p1, p2) {
+    p1.textContent = 1;
+    p2.textContent = -1;
+  }
 
-    function modificar(p1, p2) {
-        p1.textContent = 1;
-        p2.textContent = -1;
-    }
-
-    if (checkbox.checked || checkbox2.checked) {
-        if (checkbox.id == "V1V2" || checkbox.id == "V2V1") {
-            modificar(
+  if (checkbox.checked || checkbox2.checked) {
+    if (checkbox.id == "V1V2" || checkbox.id == "V2V1") {
+      modificar(
                 document.getElementById("Mi" + checkbox.id.substring(0, 2) + "A"), document.getElementById("Mi" + checkbox.id.substring(2) + "A"));
         }
 
@@ -257,6 +254,6 @@ function matrizIDirigida(checkbox, checkbox2) {
             document.getElementById("Mi" + checkbox.id.substring(0, 2) + "J").textContent = 2;
         }
     }
-}
+  }
 
 window.addEventListener("load", main);
