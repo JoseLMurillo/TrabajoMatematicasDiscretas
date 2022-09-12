@@ -1,3 +1,50 @@
+/* AUN FALTA DEFINIR
+1. El grafo es completo: No dirigido: n(n-1)/2, Dirigido: n(n-1)
+2. EL grafo es regular: Si todos los grados (Cantidad de aristas que toca) son iguales es regular. En un grafo dirigido el grado es el entrante más el saliente.
+3. El grafo es Euleriano: Que puede pasar por todos sin repetir*/
+function grafoCompleto() {
+  if(dirigido){
+    console.log("");
+  }
+  if(noDirigido){
+    console.log("");
+  }
+  else{
+    console.log("No completo");
+  }
+}
+
+let regular = 0;
+let lista = [];
+let listaVertices = [];
+
+let mensaje;
+
+var BreakException = {};
+
+function grafoRegular(id, id2) {
+  console.log(id);
+
+  if(lista.includes(id) == false && lista.includes(id2) == false){
+    lista.push(id);
+  }
+  
+  if(listaVertices.includes(id) == false){
+    listaVertices.push(id);
+  }
+
+  
+  regular += 1;
+  console.log(regular);
+  console.log("lista " + lista + " " + lista.length);
+
+  mensaje += ", es completo";
+}
+
+function grafoEuleriano() {
+
+}
+
 /* eslint-disable eqeqeq */
 // CONDICIONA LAS LISTAS VISUALES
 function mostrarDireccion() {
@@ -30,7 +77,7 @@ function ejecutar() {
   // MATRIZ ADYACENCIA
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < 4; i++) {
-    // eslint-disable-next-line no-plusplus
+
     for (let j = 0; j < 4; j++) {
       const identificador = lista1[i] + lista2[j];
       const identificador2 = lista2[j] + lista1[i];
@@ -85,6 +132,22 @@ function ejecutar() {
       }
     }
   }
+
+  let v1, v2, div;
+
+  v1 = listaVertices.length;
+  v2 = listaVertices.length - 1;
+  div = (v1 * v2) / 2;
+
+  console.log("Tamaño " + v1 + " " + listaVertices);
+
+
+  console.log(div + "ListaCOm");
+
+    /* console.log("es grafo completo");
+    mensaje += "es grafo completo"; */
+
+  document.getElementById("Mensaje").textContent = mensaje;
 }
 
 function main() {
@@ -105,6 +168,9 @@ function matrizANodirigida(checkbox, checkbox2, element2, element3) {
 
     element2.textContent = 1;
     element3.textContent = 1;
+
+    grafoRegular(checkbox.id, checkbox2.id);
+
   } else {
     element2.textContent = 0;
     element3.textContent = 0;
