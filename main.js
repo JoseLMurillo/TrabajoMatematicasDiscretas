@@ -1,48 +1,111 @@
 /* AUN FALTA DEFINIR
-1. El grafo es completo: No dirigido: n(n-1)/2, Dirigido: n(n-1)
+****. El grafo es completo: No dirigido: n(n-1)/2, Dirigido: n(n-1)
+
 2. EL grafo es regular: Si todos los grados (Cantidad de aristas que toca) son iguales es regular. En un grafo dirigido el grado es el entrante más el saliente.
 3. El grafo es Euleriano: Que puede pasar por todos sin repetir*/
-function grafoCompleto() {
-  if(dirigido){
-    console.log("");
+function intencion(numero) {
+  let v1, v2, div;
+
+  if (numero == 1) {
+    v1 = listaVertices.length;
+    v2 = listaVertices.length - 1;
+    div = (v1 * v2) / 2;
   }
-  if(noDirigido){
-    console.log("");
+  if (numero == 2) {
+    v1 = listaVertices.length;
+    v2 = listaVertices.length - 1;
+    div = (v1 * v2);
   }
-  else{
-    console.log("No completo");
+
+  if (div == lista.length && div != 0) {
+    completo = true;
   }
 }
 
-let regular = 0;
+function grafoCompletoND(id, id2) {
+
+  if (id.checked) {
+    if (lista.includes(id.id) == false && lista.includes(id2.id) == false) {
+      lista.push(id.id);
+    }
+
+    if (listaVertices.includes(id.id.substring(0, 2)) == false) {
+      listaVertices.push(id.id.substring(0, 2));
+    }
+    if (listaVertices.includes(id.id.substring(2)) == false) {
+      listaVertices.push(id.id.substring(2));
+    }
+  }
+}
+
+function grafoCompletoD(id) {
+  if (id.checked) {
+    if (lista.includes(id.id) == false) {
+      lista.push(id.id);
+    }
+
+    if (listaVertices.includes(id.id.substring(0, 2)) == false) {
+      listaVertices.push(id.id.substring(0, 2));
+    }
+    if (listaVertices.includes(id.id.substring(2)) == false) {
+      listaVertices.push(id.id.substring(2));
+    }
+    console.log(listaVertices);
+    console.log(lista.length);
+  }
+}
+
 let lista = [];
 let listaVertices = [];
 
-let mensaje;
+let completo = false;
+let regular = false;
+let euleriano = false;
+
+let v1 = [];
+let v2 = [];
+let v3 = [];
+let v4 = [];
+
 
 var BreakException = {};
 
 function grafoRegular(id, id2) {
-  console.log(id);
 
-  if(lista.includes(id) == false && lista.includes(id2) == false){
-    lista.push(id);
+  if (id.checked) {
+    switch (id.id.substring(0, 2)) {
+      case "V1":
+        if (v1.includes(id.id) == false && v1.includes(id2.id) == false) {
+          v1.push(id.id);
+          v1.push(id2.id);
+        }
+        break;
+
+      case "V2":
+        if (v2.includes(id.id) == false && v2.includes(id2.id) == false) {
+          v2.push(id.id);
+          v2.push(id2.id);
+        }
+        break;
+
+      case "V3":
+        if (v3.includes(id.id) == false && v3.includes(id2.id) == false) {
+          v3.push(id.id);
+          v3.push(id2.id);
+        }
+        break;
+
+      case "V4":
+        if (v4.includes(id.id) == false && v4.includes(id2.id) == false) {
+          v4.push(id.id);
+          v4.push(id2.id);
+        }
+        break;
+
+      default:
+        break;
+    }
   }
-  
-  if(listaVertices.includes(id) == false){
-    listaVertices.push(id);
-  }
-
-  
-  regular += 1;
-  console.log(regular);
-  console.log("lista " + lista + " " + lista.length);
-
-  mensaje += ", es completo";
-}
-
-function grafoEuleriano() {
-
 }
 
 /* eslint-disable eqeqeq */
@@ -72,12 +135,13 @@ function mostrarDireccion() {
 
 function ejecutar() {
   const relation = 'relationGraf';
-  const lista1 = ['V1', 'V2', 'V3', 'V4'];const lista2 = ['V1', 'V2', 'V3', 'V4'];const lista3 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+  const lista1 = ['V1', 'V2', 'V3', 'V4'];
+  const lista2 = ['V1', 'V2', 'V3', 'V4'];
+  const lista3 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
   // MATRIZ ADYACENCIA
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < 4; i++) {
-
     for (let j = 0; j < 4; j++) {
       const identificador = lista1[i] + lista2[j];
       const identificador2 = lista2[j] + lista1[i];
@@ -133,21 +197,21 @@ function ejecutar() {
     }
   }
 
-  let v1, v2, div;
+  /* console.log("es grafo completo");
+  mensaje += "es grafo completo"; */
 
-  v1 = listaVertices.length;
-  v2 = listaVertices.length - 1;
-  div = (v1 * v2) / 2;
+  //grafoCompletoND();
 
-  console.log("Tamaño " + v1 + " " + listaVertices);
+  if (document.getElementById("typeGraf").value == 0) {
+    intencion(1);
+  }
+  if (document.getElementById("typeGraf").value == 1) {
+    intencion(2);
+  }
 
-
-  console.log(div + "ListaCOm");
-
-    /* console.log("es grafo completo");
-    mensaje += "es grafo completo"; */
-
-  document.getElementById("Mensaje").textContent = mensaje;
+  if (completo) {
+    document.getElementById("Mensaje").textContent = "completo";
+  }
 }
 
 function main() {
@@ -169,21 +233,22 @@ function matrizANodirigida(checkbox, checkbox2, element2, element3) {
     element2.textContent = 1;
     element3.textContent = 1;
 
-    grafoRegular(checkbox.id, checkbox2.id);
-
   } else {
     element2.textContent = 0;
     element3.textContent = 0;
   }
+  grafoCompletoND(checkbox, checkbox2);
 }
 
 // MATRIZ DE ADYACENCIA DIRIGIDA
 function matrizADirigida(checkbox, elementMatriz) {
-    if (checkbox.checked) {
-        elementMatriz.textContent = 1;
-    } else {
-        elementMatriz.textContent = 0;
-    }
+  if (checkbox.checked) {
+    elementMatriz.textContent = 1;
+  } else {
+    elementMatriz.textContent = 0;
+  }
+
+  grafoCompletoD(checkbox);
 }
 
 // MATRIZ DE INCIDENCIA NO DIRIGIDA
