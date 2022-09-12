@@ -1,8 +1,10 @@
 /* AUN FALTA DEFINIR
 ****. El grafo es completo: No dirigido: n(n-1)/2, Dirigido: n(n-1)
-
 2. EL grafo es regular: Si todos los grados (Cantidad de aristas que toca) son iguales es regular. En un grafo dirigido el grado es el entrante más el saliente.
+
 3. El grafo es Euleriano: Que puede pasar por todos sin repetir*/
+
+//ESTA FUNCION ESTA ASOCIADA A GRAFOCOMPETO
 function intencion(numero) {
   let v1, v2, div;
 
@@ -22,6 +24,7 @@ function intencion(numero) {
   }
 }
 
+//GRAFO COMPLETO NO DIRIGIDO
 function grafoCompletoND(id, id2) {
 
   if (id.checked) {
@@ -38,6 +41,7 @@ function grafoCompletoND(id, id2) {
   }
 }
 
+//GRAFO COMPLETO DIRIGIDO DIRIGIDO
 function grafoCompletoD(id) {
   if (id.checked) {
     if (lista.includes(id.id) == false) {
@@ -70,35 +74,99 @@ let v4 = [];
 
 var BreakException = {};
 
-function grafoRegular(id, id2) {
+function esRegular(){
+  let mayor = 0.1, menor = 0.001;
+  listaElement = [];
 
+  if(v1.length > 0){
+    listaElement.push(v1.length);
+  }
+
+  if(v2.length > 0){
+    listaElement.push(v2.length);
+  }
+
+  if(v3.length > 0){
+    listaElement.push(v3.length);
+  }
+
+  if(v4.length > 0){
+    listaElement.push(v4.length);
+  }
+ 
+  menor = Math.min.apply(null, listaElement);
+  mayor =Math.max.apply(null, listaElement);  
+
+  console.log("V1: " + v1);
+  console.log("V2: " + v2);
+  console.log("V3: " + v3);
+  console.log("V4: " + v4);
+
+  console.log(mayor);
+  console.log(menor);
+
+  if(mayor == menor && mayor != null && menor != null){
+    console.log("El grafo es Regular")
+  }
+
+}
+
+function grafoRegularND(id, id2) {
   if (id.checked) {
     switch (id.id.substring(0, 2)) {
       case "V1":
-        if (v1.includes(id.id) == false && v1.includes(id2.id) == false) {
+        if (v1.includes(id.id) == false) {
           v1.push(id.id);
-          v1.push(id2.id);
         }
         break;
 
       case "V2":
-        if (v2.includes(id.id) == false && v2.includes(id2.id) == false) {
+        if (v2.includes(id.id) == false) {
           v2.push(id.id);
-          v2.push(id2.id);
         }
         break;
 
       case "V3":
-        if (v3.includes(id.id) == false && v3.includes(id2.id) == false) {
+        if (v3.includes(id.id) == false) {
           v3.push(id.id);
-          v3.push(id2.id);
         }
         break;
 
       case "V4":
-        if (v4.includes(id.id) == false && v4.includes(id2.id) == false) {
+        if (v4.includes(id.id) == false) {
           v4.push(id.id);
-          v4.push(id2.id);
+        }
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  if (id.checked) {
+    switch (id.id.substring(2)) {
+      case "V1":
+        if (v1.includes(id.id.substring(2)+id.id.substring(0,2)) == false) {
+          v1.push(id.id.substring(2)+id.id.substring(0,2));
+          console.log("Lo incluye");
+        }
+        break;
+
+      case "V2":
+        if (v2.includes(id.id.substring(2)+id.id.substring(0,2)) == false) {
+          v2.push(id.id.substring(2)+id.id.substring(0,2));
+        }
+        break;
+
+      case "V3":
+        if (v3.includes(id.id.substring(2)+id.id.substring(0,2)) == false) {
+          v3.push(id.id.substring(2)+id.id.substring(0,2));
+        }
+        break;
+
+      case "V4":
+        if (v4.includes(id.id.substring(2)+id.id.substring(0,2)) == false) {
+          v4.push(id.id.substring(2)+id.id.substring(0,2));
         }
         break;
 
@@ -152,11 +220,15 @@ function ejecutar() {
       // NO DIRIGIDO
       if (document.getElementById(relation + (i + 1)).value == 1) {
         matrizANodirigida(document.getElementById(identificador), document.getElementById(identificador2), document.getElementById(MAVI), document.getElementById(MAVI2));
+
+        grafoRegularND(document.getElementById(identificador), document.getElementById(identificador2));
       }
 
       // DIRIGIDO
       if (document.getElementById(relation + (i + 1)).value == 2) {
         matrizADirigida(document.getElementById(identificador), document.getElementById(MAVI));
+
+        grafoRegularND(document.getElementById(identificador), document.getElementById(identificador2));
       }
     }
   }
@@ -197,11 +269,6 @@ function ejecutar() {
     }
   }
 
-  /* console.log("es grafo completo");
-  mensaje += "es grafo completo"; */
-
-  //grafoCompletoND();
-
   if (document.getElementById("typeGraf").value == 0) {
     intencion(1);
   }
@@ -212,8 +279,11 @@ function ejecutar() {
   if (completo) {
     document.getElementById("Mensaje").textContent = "completo";
   }
+
+  esRegular();
 }
 
+//FUNCION PRINCIPAL
 function main() {
   mostrarDireccion();
   const typeGraf = document.getElementById('typeGraf');
