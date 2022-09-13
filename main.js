@@ -1,7 +1,6 @@
 /* AUN FALTA DEFINIR
 ****. El grafo es completo: No dirigido: n(n-1)/2, Dirigido: n(n-1)
 2. EL grafo es regular: Si todos los grados (Cantidad de aristas que toca) son iguales es regular. En un grafo dirigido el grado es el entrante más el saliente.
-
 3. El grafo es Euleriano: Que puede pasar por todos sin repetir*/
 
 //FUNCION PRINCIPAL
@@ -104,10 +103,13 @@ function matrizADirigida(checkbox, elementMatriz) {
 function grafoRegularND(id) {
   let id2 = id.id.substring(2)+id.id.substring(0,2);
   if (id.checked) {
-    switch (id.id.substring(0, 2) || id.id.substring(2)) {
+    switch (id.id.substring(0, 2)) {
       case "V1":
         if (v1.includes(id.id) == false) {
           v1.push(id.id);
+        }
+        if (v1.includes(id2) == false) {
+          v1.push(id2);
         }
         break;
 
@@ -115,85 +117,33 @@ function grafoRegularND(id) {
         if (v2.includes(id.id) == false) {
           v2.push(id.id);
         }
+        if (v2.includes(id2) == false) {
+          v2.push(id2);
+        }
         break;
 
       case "V3":
         if (v3.includes(id.id) == false) {
           v3.push(id.id);
         }
+        if (v3.includes(id2) == false) {
+          v3.push(id2);
+        }
         break;
 
       case "V4":
         if (v4.includes(id.id) == false) {
           v4.push(id.id);
+        }
+        if (v4.includes(id2) == false) {
+          v4.push(id2);
         }
         break;
 
       default:
         break;
     }
-
-    /* switch (id.id.substring(0, 2)) {
-      case "V1":
-        if (v1.includes(id.id) == false) {
-          v1.push(id.id);
-        }
-        break;
-
-      case "V2":
-        if (v2.includes(id.id) == false) {
-          v2.push(id.id);
-        }
-        break;
-
-      case "V3":
-        if (v3.includes(id.id) == false) {
-          v3.push(id.id);
-        }
-        break;
-
-      case "V4":
-        if (v4.includes(id.id) == false) {
-          v4.push(id.id);
-        }
-        break;
-
-      default:
-        break;
-    } */
   }
-
-  /* if (id.checked) {
-    switch (id.id.substring(2)) {
-      case "V1":
-        if (v1.includes(id.id.substring(2) + id.id.substring(0, 2)) == false) {
-          v1.push(id.id.substring(2) + id.id.substring(0, 2));
-          console.log("Lo incluye");
-        }
-        break;
-
-      case "V2":
-        if (v2.includes(id.id.substring(2) + id.id.substring(0, 2)) == false) {
-          v2.push(id.id.substring(2) + id.id.substring(0, 2));
-        }
-        break;
-
-      case "V3":
-        if (v3.includes(id.id.substring(2) + id.id.substring(0, 2)) == false) {
-          v3.push(id.id.substring(2) + id.id.substring(0, 2));
-        }
-        break;
-
-      case "V4":
-        if (v4.includes(id.id.substring(2) + id.id.substring(0, 2)) == false) {
-          v4.push(id.id.substring(2) + id.id.substring(0, 2));
-        }
-        break;
-
-      default:
-        break;
-    }
-  } */
 }
 
 //BOTON EJECUTAR
@@ -286,12 +236,12 @@ function ejecutar() {
     intencion(2);
   }
 
-  if (completo) {
+  if (completo != false) {
     Mensaje += "Completo"; 
   }
 
   esRegular();
-  document.getElementById("Mensaje").textContent = "completo";
+  document.getElementById("Mensaje").textContent = Mensaje;
 }
 
 
@@ -350,9 +300,8 @@ function esRegular() {
   console.log(menor);
 
   if (mayor == menor && mayor != null && menor != null) {
-    console.log("El grafo es Regular")
+    Mensaje += ", Regular";
   }
-
 }
 
 // MATRIZ DE INCIDENCIA NO DIRIGIDA
