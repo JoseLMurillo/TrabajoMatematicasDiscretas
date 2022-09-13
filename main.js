@@ -1,8 +1,5 @@
 /* AUN FALTA DEFINIR
-****. El grafo es completo: No dirigido: n(n-1)/2, Dirigido: n(n-1)
-2. EL grafo es regular: Si todos los grados (Cantidad de aristas que toca) son iguales es regular. En un grafo dirigido el grado es el entrante más el saliente.
 3. El grafo es Euleriano: Que puede pasar por todos sin repetir*/
-
 //FUNCION PRINCIPAL
 window.addEventListener('load', mostrarDireccion());
 document.getElementById('typeGraf').addEventListener('click', mostrarDireccion);
@@ -11,43 +8,51 @@ let Mensaje = "";
 let completo = false;
 let regular = false;
 let euleriano = false;
-
-//REVISAR SI ESTAS LISTAS REPITEN VALORES, SI NO CREAR UNA LISTA UNICA
-let lista = []; //CREO QUE ESTO SE PUEDE CAMBIAR POR UN CONTADOR
+let listaAristas = []; //CREO QUE ESTO SE PUEDE CAMBIAR POR UN CONTADOR
 let listaVertices = [];
-let v1 = [];
-let v2 = [];
-let v3 = [];
-let v4 = [];
+let v1 = [],
+  v2 = [],
+  v3 = [],
+  v4 = [];
 
+const listaConsColumI = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+
+/* 
+ * ESTA FUNCION ESTA OK
+ */
 // CONDICIONA LAS LISTAS VISUALES
 function mostrarDireccion() {
-  let elementos = ['dV1', 'dV2', 'dV3', 'dV4', 'ndV1', 'ndV2', 'ndV3', 'ndV4'];
+  const elementos = ['dV1', 'dV2', 'dV3', 'dV4', 'ndV1', 'ndV2', 'ndV3', 'ndV4'];
 
   if (document.getElementById('typeGraf').value == 1) {
-    for (i = 0; i <= 3; i++) {
-      document.getElementById(elementos[i]).hidden = false;
-    }
-    for (i = 4; i <= 7; i++) {
-      document.getElementById(elementos[i]).hidden = true;
+    for (let i = 0; i <= 7; i++) {
+      if (i <= 3) {
+        document.getElementById(elementos[i]).hidden = false;
+      } else {
+        document.getElementById(elementos[i]).hidden = true;
+      }
     }
 
   } else {
-    for (i = 0; i <= 3; i++) {
-      document.getElementById(elementos[i]).hidden = true;
-    }
-    for (i = 4; i <= 7; i++) {
-      document.getElementById(elementos[i]).hidden = false;
+    for (let i = 0; i <= 7; i++) {
+      if (i <= 3) {
+        document.getElementById(elementos[i]).hidden = true;
+      } else {
+        document.getElementById(elementos[i]).hidden = false;
+      }
     }
   }
 }
 
+/* 
+ * ESTA FUNCION ESTA OK
+ */
 //GRAFO COMPLETO NO DIRIGIDO
 function grafoCompletoND(id, id2) {
   if (id.checked || id2.checked) {
-    //TIENE EL ID
-    if (lista.includes(id.id) == false && lista.includes(id2.id) == false) {
-      lista.push(id.id);
+    //TIENE EL ID || ARISTAS
+    if (listaAristas.includes(id.id) == false && listaAristas.includes(id2.id) == false) {
+      listaAristas.push(id.id);
     }
     //TIENE EL VERTICE
     if (listaVertices.includes(id.id.substring(0, 2)) == false) {
@@ -59,37 +64,48 @@ function grafoCompletoND(id, id2) {
   }
 }
 
+/* 
+ * ESTA FUNCION ESTA OK
+ */
 // MATRIZ DE ADYACENCIA NO DIRIGIDA
-function matrizANodirigida(checkbox, checkbox2, element2, element3) {
+function matrizANodirigida(checkbox, checkbox2, elementMA, elementMA2) {
   if (checkbox.checked || checkbox2.checked) {
     checkbox.checked = true;
     checkbox2.checked = true;
 
-    element2.textContent = 1;
-    element3.textContent = 1;
+    elementMA.textContent = 1;
+    elementMA2.textContent = 1;
 
   } else {
-    element2.textContent = 0;
-    element3.textContent = 0;
+    elementMA.textContent = 0;
+    elementMA2.textContent = 0;
   }
   grafoCompletoND(checkbox, checkbox2);
 }
 
+/* 
+ * ESTA FUNCION ESTA OK
+ */
 //GRAFO COMPLETO DIRIGIDO DIRIGIDO
 function grafoCompletoD(id) {
+  const vertice = id.id.substring(0, 2);
+  const vertice2 = id.id.substring(2);
   if (id.checked) {
-    if (lista.includes(id.id) == false) {
-      lista.push(id.id);
+    if (listaAristas.includes(id.id) == false) {
+      listaAristas.push(id.id);
     }
-    if (listaVertices.includes(id.id.substring(0, 2)) == false) {
-      listaVertices.push(id.id.substring(0, 2));
+    if (listaVertices.includes(vertice) == false) {
+      listaVertices.push(vertice);
     }
-    if (listaVertices.includes(id.id.substring(2)) == false) {
-      listaVertices.push(id.id.substring(2));
+    if (listaVertices.includes(vertice2) == false) {
+      listaVertices.push(vertice2);
     }
   }
 }
 
+/* 
+ * ESTA FUNCION ESTA OK
+ */
 // MATRIZ DE ADYACENCIA DIRIGIDA
 function matrizADirigida(checkbox, elementMatriz) {
   if (checkbox.checked) {
@@ -100,16 +116,20 @@ function matrizADirigida(checkbox, elementMatriz) {
   grafoCompletoD(checkbox);
 }
 
-function grafoRegularND(id) {
-  let id2 = id.id.substring(2)+id.id.substring(0,2);
+/* 
+ * ESTA FUNCION ESTA OK
+ */
+//GRAFO REGULAR
+function grafoRegular(id) {
+  const idInversa = id.id.substring(2) + id.id.substring(0, 2);
   if (id.checked) {
     switch (id.id.substring(0, 2)) {
       case "V1":
         if (v1.includes(id.id) == false) {
           v1.push(id.id);
         }
-        if (v1.includes(id2) == false) {
-          v1.push(id2);
+        if (v1.includes(idInversa) == false) {
+          v1.push(idInversa);
         }
         break;
 
@@ -117,8 +137,8 @@ function grafoRegularND(id) {
         if (v2.includes(id.id) == false) {
           v2.push(id.id);
         }
-        if (v2.includes(id2) == false) {
-          v2.push(id2);
+        if (v2.includes(idInversa) == false) {
+          v2.push(idInversa);
         }
         break;
 
@@ -126,8 +146,8 @@ function grafoRegularND(id) {
         if (v3.includes(id.id) == false) {
           v3.push(id.id);
         }
-        if (v3.includes(id2) == false) {
-          v3.push(id2);
+        if (v3.includes(idInversa) == false) {
+          v3.push(idInversa);
         }
         break;
 
@@ -135,8 +155,8 @@ function grafoRegularND(id) {
         if (v4.includes(id.id) == false) {
           v4.push(id.id);
         }
-        if (v4.includes(id2) == false) {
-          v4.push(id2);
+        if (v4.includes(idInversa) == false) {
+          v4.push(idInversa);
         }
         break;
 
@@ -146,21 +166,23 @@ function grafoRegularND(id) {
   }
 }
 
+/* 
+ * ESTA FUNCION ESTA OK
+ */
 //BOTON EJECUTAR
 function ejecutar() {
   const relation = 'relationGraf';
   const lista1 = ['V1', 'V2', 'V3', 'V4'];
-  const lista2 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+  let listaColumnasI = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   const typeGraf = document.getElementById("typeGraf").value;
 
   // MATRIZ ADYACENCIA
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
-      const identificador = lista1[i] + lista1[j];
-      const identificador2 = lista1[j] + lista1[i];
-      const MAVI = "Ma" + identificador;
-      const MAVI2 = "Ma" + identificador2;
-
+      let identificador = lista1[i] + lista1[j];
+      let identificador2 = lista1[j] + lista1[i];
+      let MAVI = "Ma" + identificador;
+      let MAVI2 = "Ma" + identificador2;
       let tongleList = document.getElementById(relation + (i + 1)).value;
 
       //MATRIZ ADYACENCIA NO DIRIGIDO
@@ -181,70 +203,70 @@ function ejecutar() {
       }
 
       //GRAFO REGULAR
-      grafoRegularND(document.getElementById(identificador));
+      grafoRegular(document.getElementById(identificador));
     }
   }
 
   // MATRIZ INCIDENCIA
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 4; j++) {
-      for (const c of lista1) {
-
-        const identificador = lista1[j] + c;
-        const identificador2 = c + lista1[j];
+      for (let k = 0; k < 4; k++) {
+        let identificador = lista1[j] + lista1[k];
+        let identificador2 = lista1[k] + lista1[j];
 
         if (document.getElementById(relation + (j + 1)).value == 1) {
           //MATRIZ DE INCIDENCIA NO DIRIGIDO
           matrizINodirigida(
-            document.getElementById(identificador), 
-            document.getElementById(identificador2), 
-            lista2[0]);
+            document.getElementById(identificador),
+            document.getElementById(identificador2),
+            listaColumnasI[0]);
         }
       }
     }
-    lista2.shift();
+    listaColumnasI.shift();
   }
 
   for (let i = 0; i < 4; i++) {
-    for (let k = 0; k < 4; k++) {
-      let identificador = lista1[i] + lista1[k];
-      let identificador2 = lista1[k] + lista1[i];
+    for (let j = 0; j < 4; j++) {
+      let identificador = lista1[i] + lista1[j];
+      let identificador2 = lista1[j] + lista1[i];
       let TongleList = document.getElementById(relation + (i + 1)).value;
 
       //MATRIZ INCIDENCIA NO DIRIGIDO
       if (TongleList == 1) {
         matrizINodirigida(
-          document.getElementById(identificador), 
+          document.getElementById(identificador),
           document.getElementById(identificador2)
-          );
+        );
       }
 
       //MATRIZ INCIDENCIA DIRIGIDO
       if (TongleList == 2) {
         matrizIDirigida(
-          document.getElementById(identificador), 
+          document.getElementById(identificador),
           document.getElementById(identificador2)
-          );
+        );
       }
     }
   }
 
   if (typeGraf == 0) {
     intencion(1);
-  }
-  if (typeGraf == 1) {
+  } else {
     intencion(2);
   }
 
   if (completo != false) {
-    Mensaje += "Completo"; 
+    Mensaje += "Completo";
   }
 
   esRegular();
   document.getElementById("Mensaje").textContent = Mensaje;
 }
 
-
+/* 
+ * ESTA FUNCION ESTA OK
+ */
 //ESTA FUNCION ESTA ASOCIADA A GRAFOCOMPETO
 function intencion(numero) {
   let v1, v2, div;
@@ -260,30 +282,29 @@ function intencion(numero) {
     div = (v1 * v2);
   }
 
-  if (div == lista.length && div != 0) {
+  if (div == listaAristas.length && div != 0) {
     completo = true;
   }
 }
 
-var BreakException = {};
-
+/* 
+ * ESTA FUNCION ESTA OK
+ */
+//FUNCION REGULAR
 function esRegular() {
   let mayor = 0.1,
-    menor = 0.001;
-  listaElement = [];
+    menor = 0.001,
+    listaElement = [];
 
   if (v1.length > 0) {
     listaElement.push(v1.length);
   }
-
   if (v2.length > 0) {
     listaElement.push(v2.length);
   }
-
   if (v3.length > 0) {
     listaElement.push(v3.length);
   }
-
   if (v4.length > 0) {
     listaElement.push(v4.length);
   }
@@ -291,74 +312,72 @@ function esRegular() {
   menor = Math.min.apply(null, listaElement);
   mayor = Math.max.apply(null, listaElement);
 
-  console.log("V1: " + v1);
-  console.log("V2: " + v2);
-  console.log("V3: " + v3);
-  console.log("V4: " + v4);
-
-  console.log(mayor);
-  console.log(menor);
-
   if (mayor == menor && mayor != null && menor != null) {
     Mensaje += ", Regular";
   }
 }
 
+/* 
+ * ESTA FUNCION ESTA OK
+ */
 // MATRIZ DE INCIDENCIA NO DIRIGIDA
 function matrizINodirigida(checkbox, checkbox2) {
+  let idCheckbox = checkbox.id.substring(0, 2);
+  let idCheckbox2 = checkbox.id.substring(2);
+
   function modificar(p1, p2) {
     p1.textContent = 1;
     p2.textContent = 1;
   }
 
-  function mandarCero(p1, p2) {
-    p1.textContent = 0;
-    p2.textContent = 0;
-  }
-
   if (checkbox.checked && checkbox2.checked) {
-    if (checkbox.id == 'V1V2' || checkbox.id == 'V2V1') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}A`), document.getElementById(`Mi${checkbox.id.substring(2)}A`));
-    }
+    for (let i = 0; i < 10; i++) {
+      if ((checkbox.id == 'V1V2' || checkbox.id == 'V2V1') && listaConsColumI[i] == 'A') {
+        modificar(document.getElementById('Mi' + idCheckbox + listaConsColumI[i]), document.getElementById('Mi' + idCheckbox2 + listaConsColumI[i]));
+      }
 
-    if (checkbox.id == 'V2V3' || checkbox.id == 'V3V2') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}B`), document.getElementById(`Mi${checkbox.id.substring(2)}B`));
-    }
+      if ((checkbox.id == 'V2V3' || checkbox.id == 'V3V2') && listaConsColumI[i] == 'B') {
+        modificar(document.getElementById('Mi' + idCheckbox + listaConsColumI[i]), document.getElementById('Mi' + idCheckbox2 + listaConsColumI[i]));
+      }
 
-    if (checkbox.id == 'V3V4' || checkbox.id == 'V4V3') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}C`), document.getElementById(`Mi${checkbox.id.substring(2)}C`));
-    }
+      if ((checkbox.id == 'V3V4' || checkbox.id == 'V4V3') && listaConsColumI[i] == 'C') {
+        modificar(document.getElementById('Mi' + idCheckbox + listaConsColumI[i]), document.getElementById('Mi' + idCheckbox2 + listaConsColumI[i]));
+      }
 
-    if (checkbox.id == 'V1V4' || checkbox.id == 'V4V1') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}D`), document.getElementById(`Mi${checkbox.id.substring(2)}D`));
-    }
+      if ((checkbox.id == 'V1V4' || checkbox.id == 'V4V1') && listaConsColumI[i] == 'D') {
+        modificar(document.getElementById('Mi' + idCheckbox + listaConsColumI[i]), document.getElementById('Mi' + idCheckbox2 + listaConsColumI[i]));
+      }
 
-    if (checkbox.id == 'V1V3' || checkbox.id == 'V3V1') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}E`), document.getElementById(`Mi${checkbox.id.substring(2)}E`));
-    }
+      if ((checkbox.id == 'V1V3' || checkbox.id == 'V3V1') && listaConsColumI[i] == 'E') {
+        modificar(document.getElementById('Mi' + idCheckbox + listaConsColumI[i]), document.getElementById('Mi' + idCheckbox2 + listaConsColumI[i]));
+      }
 
-    if (checkbox.id == 'V2V4' || checkbox.id == 'V4V2') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}F`), document.getElementById(`Mi${checkbox.id.substring(2)}F`));
-    }
+      if ((checkbox.id == 'V2V4' || checkbox.id == 'V4V2') && listaConsColumI[i] == 'F') {
+        modificar(document.getElementById('Mi' + idCheckbox + listaConsColumI[i]), document.getElementById('Mi' + idCheckbox2 + listaConsColumI[i]));
+      }
 
-    if (checkbox.id == 'V1V1') {
-      document.getElementById(`Mi${checkbox.id.substring(0, 2)}G`).textContent = 2;
-    }
+      if (checkbox.id == 'V1V1' && listaConsColumI[i] == 'G') {
+        document.getElementById('Mi' + idCheckbox + listaConsColumI[i]).textContent = 2;
+      }
 
-    if (checkbox.id == 'V2V2') {
-      document.getElementById(`Mi${checkbox.id.substring(0, 2)}H`).textContent = 2;
-    }
+      if (checkbox.id == 'V2V2' && listaConsColumI[i] == 'H') {
+        document.getElementById('Mi' + idCheckbox + listaConsColumI[i]).textContent = 2;
+      }
 
-    if (checkbox.id == 'V3V3') {
-      document.getElementById(`Mi${checkbox.id.substring(0, 2)}I`).textContent = 2;
-    }
+      if (checkbox.id == 'V3V3' && listaConsColumI[i] == 'I') {
+        document.getElementById('Mi' + idCheckbox + listaConsColumI[i]).textContent = 2;
+      }
 
-    if (checkbox.id == 'V4V4') {
-      document.getElementById(`Mi${checkbox.id.substring(0, 2)}J`).textContent = 2;
+      if (checkbox.id == 'V4V4' && listaConsColumI[i] == 'J') {
+        document.getElementById('Mi' + idCheckbox + listaConsColumI[i]).textContent = 2;
+      }
     }
   }
 }
 
+/* 
+ * ESTA FUNCION ESTA OK
+ */
 // MATRIZ DE INCIDENCIA DIRIGIDA
 function matrizIDirigida(checkbox, checkbox2) {
   function modificar(p1, p2) {
@@ -367,44 +386,40 @@ function matrizIDirigida(checkbox, checkbox2) {
   }
 
   if (checkbox.checked || checkbox2.checked) {
-    if (checkbox.id == 'V1V2' || checkbox.id == 'V1V2') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}A`), document.getElementById(`Mi${checkbox.id.substring(2)}A`));
-    }
+    idCortado = checkbox.id.substring(0, 2);
+    idCortado2 = checkbox.id.substring(2);
 
-    if (checkbox.id == 'V2V3' || checkbox.id == 'V3V2') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}B`), document.getElementById(`Mi${checkbox.id.substring(2)}B`));
-    }
-
-    if (checkbox.id == 'V3V4' || checkbox.id == 'V4V3') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}C`), document.getElementById(`Mi${checkbox.id.substring(2)}C`));
-    }
-
-    if (checkbox.id == 'V1V4' || checkbox.id == 'V4V1') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}D`), document.getElementById(`Mi${checkbox.id.substring(2)}D`));
-    }
-
-    if (checkbox.id == 'V1V3' || checkbox.id == 'V3V1') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}E`), document.getElementById(`Mi${checkbox.id.substring(2)}E`));
-    }
-
-    if (checkbox.id == 'V2V4' || checkbox.id == 'V4V2') {
-      modificar(document.getElementById(`Mi${checkbox.id.substring(0, 2)}F`), document.getElementById(`Mi${checkbox.id.substring(2)}F`));
-    }
-
-    if (checkbox.id == 'V1V1') {
-      document.getElementById(`Mi${checkbox.id.substring(0, 2)}G`).textContent = 2;
-    }
-
-    if (checkbox.id == 'V2V2') {
-      document.getElementById(`Mi${checkbox.id.substring(0, 2)}H`).textContent = 2;
-    }
-
-    if (checkbox.id == 'V3V3') {
-      document.getElementById(`Mi${checkbox.id.substring(0, 2)}I`).textContent = 2;
-    }
-
-    if (checkbox.id == 'V4V4') {
-      document.getElementById(`Mi${checkbox.id.substring(0, 2)}J`).textContent = 2;
+    for (let i = 0; i < 10; i++) {
+      if ((checkbox.id == 'V1V2' || checkbox.id == 'V2V1') && listaConsColumI[i] == 'A') {
+        modificar(document.getElementById('Mi' + idCortado + listaConsColumI[i]), document.getElementById('Mi' + idCortado2 + listaConsColumI[i]));
+      }
+      if ((checkbox.id == 'V2V3' || checkbox.id == 'V3V2') && listaConsColumI[i] == 'B') {
+        modificar(document.getElementById('Mi' + idCortado + listaConsColumI[i]), document.getElementById('Mi' + idCortado2 + listaConsColumI[i]));
+      }
+      if ((checkbox.id == 'V3V4' || checkbox.id == 'V4V3') && listaConsColumI[i] == 'C') {
+        modificar(document.getElementById('Mi' + idCortado + listaConsColumI[i]), document.getElementById('Mi' + idCortado2 + listaConsColumI[i]));
+      }
+      if ((checkbox.id == 'V1V4' || checkbox.id == 'V4V1') && listaConsColumI[i] == 'D') {
+        modificar(document.getElementById('Mi' + idCortado + listaConsColumI[i]), document.getElementById('Mi' + idCortado2 + listaConsColumI[i]));
+      }
+      if ((checkbox.id == 'V1V3' || checkbox.id == 'V3V1') && listaConsColumI[i] == 'E') {
+        modificar(document.getElementById('Mi' + idCortado + listaConsColumI[i]), document.getElementById('Mi' + idCortado2 + listaConsColumI[i]));
+      }
+      if ((checkbox.id == 'V2V4' || checkbox.id == 'V4V2') && listaConsColumI[i] == 'F') {
+        modificar(document.getElementById('Mi' + idCortado + listaConsColumI[i]), document.getElementById('Mi' + idCortado2 + listaConsColumI[i]));
+      }
+      if (checkbox.id == 'V1V1' && listaConsColumI[i] == 'G') {
+        document.getElementById('Mi' + idCortado + listaConsColumI[i]).textContent = 2;
+      }
+      if (checkbox.id == 'V2V2' && listaConsColumI[i] == 'H') {
+        document.getElementById('Mi' + idCortado + listaConsColumI[i]).textContent = 2;
+      }
+      if (checkbox.id == 'V3V3' && listaConsColumI[i] == 'I') {
+        document.getElementById('Mi' + idCortado + listaConsColumI[i]).textContent = 2;
+      }
+      if (checkbox.id == 'V4V4' && listaConsColumI[i] == 'J') {
+        document.getElementById('Mi' + idCortado + listaConsColumI[i]).textContent = 2;
+      }
     }
   }
 } //422

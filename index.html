@@ -10,11 +10,6 @@
 </head>
 
 <body id="body">
-    <!-- AUN FALTA DEFINIR
-    1. El grafo es complet
-2. EL grafo es regular
-3. El grafo es Euleriano -->
-
     <!-- CREAR EVENTOS PARA RECIBIR LOS VALORES -->
     <samp>Ingrese tipo de grafo</samp>
     <select name="typeGraf" id="typeGraf">
@@ -117,6 +112,7 @@
     </div>
     <button type="button" id="Enviar">ENVIAR</button>
 
+    <!-- MATRIZ DE ADYACENCIA -->
     <div>
         <h1>Matriz matrizAdyacencia</h1>
         <table id="matrizAdyacencia">
@@ -158,6 +154,7 @@
         </table>
     </div>
 
+    <!-- MATRIZ DE INCIDENCIA -->
     <div>
         <h1>Matriz de Incidencia</h1>
         <table id="matrizIncidencia">
@@ -227,9 +224,11 @@
                 <td id="MiV4J">0</td>
             </tr>
         </table>
-    </div>
+    </div><br>
+
+    <label>El grafo es:</label>
     <p id="Mensaje"></p>
-    <p>ES RECOMENDABLE RECARGAR LA PAGINA POR CADA EJECUCION PARA UNA BUENA VISUALIZACION DEL CONTENIDO</p>
+    <h2>PARA UNA BUENA VISUALIZACION DEL CONTENIDO ES RECOMENDABLE RECARGAR LA PAGINA POR CADA EJECUCION</h2>
 </body>
 <script src="main.js"></script>
 
